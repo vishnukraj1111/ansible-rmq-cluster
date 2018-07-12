@@ -1,0 +1,21 @@
+- name: Install and configure RMQ Cluster
+  hosts:  #your host file name or dynamic tag/group value in case of dynamic inventory
+  gather_facts: true
+  become: yes
+
+  vars:
+      erlang_cookie: #erlang cookie
+      disk_free_limit: 1000M # can be changed
+      modules:
+          - {vhost: vhost_name, user: user_name, password: user_password}
+      tag: administrator
+
+      #add master tag here
+      rabbitmq_master: "{{ groups['rmq_master'][0] }}"
+
+      #add slaves tag here
+      rabbitmq_slave: "{{ groups['rmq_slaves'] }}"
+      cluster: yes
+
+  roles:
+     - rmq-setup
