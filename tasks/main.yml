@@ -57,7 +57,6 @@
         rabbitmqctl add_user {{ item.user }} {{ item.password }}
         rabbitmqctl set_user_tags {{ item.user }} {{ tag }}
         rabbitmqctl set_permissions -p {{ item.vhost }} {{ item.user }} ".*" ".*" ".*"
-        rabbitmqctl delete_user guest
       when: inventory_hostname == rabbitmq_master
 
       with_items: "{{ modules }}"
